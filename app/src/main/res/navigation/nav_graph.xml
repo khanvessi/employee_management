@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.employeescrud.ui.login.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_addEmployeeFragment"
+            app:destination="@id/addEmployeeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/employeeFragment"
+        android:name="com.example.employeescrud.ui.employee.EmployeeFragment"
+        android:label="Employees List"
+        tools:layout="@layout/fragment_employee" >
+        <action
+            android:id="@+id/action_employeeFragment_to_addEmployeeFragment"
+            app:destination="@id/addEmployeeFragment" />
+        <action
+            android:id="@+id/action_employeeFragment_to_addEmployeeFragment2"
+            app:destination="@id/addEmployeeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEmployeeFragment"
+        android:name="com.example.employeescrud.ui.addeditemployee.AddEditEmployeeFragment"
+        android:label="Add Employee"
+        tools:layout="@layout/fragment_addedit_employee">
+        <action
+            android:id="@+id/action_addEmployeeFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+        <argument
+            android:name="employee"
+            app:argType="com.example.employeescrud.data.models.Employee"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="addEmp"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="create" />
+    </fragment>
+</navigation>

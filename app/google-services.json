@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "428857178255",
+    "project_id": "user-authentication-da401",
+    "storage_bucket": "user-authentication-da401.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428857178255:android:af5072f5c4e28df22d98fa",
+        "android_client_info": {
+          "package_name": "com.example.employeescrud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428857178255-nkonjrispscn61edi3l0ln2k56ch3fuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUz9-lAoZC7ACgO9liWPeg2Lo_vrqj7zM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428857178255-nkonjrispscn61edi3l0ln2k56ch3fuv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
