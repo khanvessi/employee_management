@@ -36,11 +36,13 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
             Handler().postDelayed({
                 if (employeesLiveData.value?.isEmpty() == false){
                     areEmployeesAdded.postValue(true)
+                    apiSuccessResponse.postValue(true)
                     Log.e("EmployeeViewModel", "If the DB has the data: ${Thread.currentThread().name} "+ employeesLiveData.value)
                 }
                 else {
                     Log.e("EmployeeViewModel", "If the DB doesn't have the data: ${Thread.currentThread().name} "+ employeesLiveData.value)
                     areEmployeesAdded.postValue(false)
+                    apiSuccessResponse.postValue(false)
                 }
             }, 1000)
         }
@@ -54,7 +56,7 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
                 withContext(Dispatchers.Main) {
                     if (result != null) {
                         updateDBAfterApiSuccessReponse(result, context)
-                        //apiSuccessResponse.postValue(true)
+                        apiSuccessResponse.postValue(true)
                         Log.e(
                             "EmployeeViewModel",
                             "Got the Api Response: ${Thread.currentThread().name}"
@@ -65,7 +67,6 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 Log.e("EmployeeViewModel", "GetEmployees failed: \n ${ex.message}")
-                apiSuccessResponse.postValue(false)
                 employeeEventChannel.send(EmployeeEvent.RefreshFragmentInCaseOfFailedApiResponse)
             }
         }

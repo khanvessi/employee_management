@@ -2,6 +2,7 @@ package com.example.employeescrud.ui.employee
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -174,8 +175,6 @@ class EmployeeFragment : Fragment() {
     }
 
     private fun recallRetrofit() {
-//        navController!!.navigate(R.id.action_employeeFragment_to_addEmployeeFragment)
-//        navController!!.navigate(R.id.action_addEmployeeFragment_to_employeeFragment)
         employeeViewModel.apiSuccessResponse.observe(viewLifecycleOwner) { response ->
             if (!response) {
                 Log.e("apisuccessResponse", "isSuccuesful?: ${Thread.currentThread().name} "+ response)
@@ -183,8 +182,6 @@ class EmployeeFragment : Fragment() {
             }else{
                 //progressDialog!!.dismiss()
             }
-
-
         }
     }
 

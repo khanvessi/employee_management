@@ -176,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:text="@{`` + employeViewModel.employeeDataClass.id}"
+            android:text="@{`` + employee.id}"
             app:layout_constraintBottom_toBottomOf="@+id/text_userid"
             app:layout_constraintEnd_toStartOf="@+id/cv_delete_employee"
             app:layout_constraintStart_toEndOf="@+id/txt_age"
