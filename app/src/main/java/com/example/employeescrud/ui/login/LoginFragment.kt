@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
                                         progressDialog!!.dismiss()
                                     } else {
                                         progressDialog!!.dismiss()
-                                        binding.tilPassword.error = "Invalid Email/Password"
+                                        binding.tilPassword.error = task.exception?.message
                                     }
                                     progressDialog!!.dismiss()
                                 }
