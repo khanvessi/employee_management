@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -35,6 +36,7 @@ class EmployeeFragment : Fragment() {
 
     private var navController: NavController? = null
     var progressDialog: ProgressDialog? = null
+    var searchClick: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,13 +67,19 @@ class EmployeeFragment : Fragment() {
 //        progressDialog!!.setCanceledOnTouchOutside(false)
 
         employeeViewModel.getEmployeesFromDb(requireContext())
-        employeeViewModel.areEmployeesAdded.observe(viewLifecycleOwner) {
+        employeeViewModel.areEmployeesAdded.observe(viewLifecycleOwner)  {
             if (!it) {
                 employeeViewModel.getEmployees(requireContext())
-                Log.e("areEmployeesAdded", "Are Employees Added? No: ${Thread.currentThread().name} "+ it)
-            }else{
+                Log.e(
+                    "areEmployeesAdded",
+                    "Are Employees Added? No: ${Thread.currentThread().name} " + it
+                )
+            } else {
                 //progressDialog!!.dismiss()
-                Log.e("areEmployeesAdded", "Are Employees Added? Yes: ${Thread.currentThread().name} "+ it)
+                Log.e(
+                    "areEmployeesAdded",
+                    "Are Employees Added? Yes: ${Thread.currentThread().name} " + it
+                )
                 binding.shimmerLayout.stopShimmerAnimation()
                 binding.shimmerLayout.visibility = View.GONE
             }
@@ -124,10 +132,17 @@ class EmployeeFragment : Fragment() {
             }).attachToRecyclerView(recViewUsers)
         }
 
+        //FROM DB
         employeeViewModel.employeesLiveData.observe(viewLifecycleOwner) {
             employeeAdapter.submitList(it)
         }
 
+        //FROM SIMPLE SEARCH
+        employeeViewModel.simpleSearchResult.observe(viewLifecycleOwner){
+            employeeAdapter.submitList(it)
+        }
+
+        //ADDING AN EMPLOYEE
         binding.fabAddTask.setOnClickListener(View.OnClickListener {
             val action = EmployeeFragmentDirections.actionEmployeeFragmentToAddEmployeeFragment(
                 Employee(
@@ -140,6 +155,48 @@ class EmployeeFragment : Fragment() {
                 "create"
             )
             findNavController().navigate(action)
+        })
+
+        //SHOWING OPTIONS FOR SIMPLE/ADVANCE SEARCH
+        binding.fabSearchIcon.setOnClickListener(View.OnClickListener {
+
+            binding.apply {
+
+                if(searchClick){
+                    txtAdvanceSearch.visibility = View.VISIBLE
+                    txtSimpleSearch.visibility = View.VISIBLE
+                    recViewUsers.visibility = View.GONE
+                    fabSearchIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_cancel));
+                    searchClick = false
+                }else{
+                    txtAdvanceSearch.visibility = View.GONE
+                    txtSimpleSearch.visibility = View.GONE
+                    recViewUsers.visibility = View.VISIBLE
+                    fabSearchConfirm.visibility = View.GONE
+                    edtSearchHere.visibility = View.GONE
+                    fabSearchIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search));
+                    //employeeViewModel.getEmployeesFromDb(requireContext())
+                    searchClick = true
+
+                }
+            }
+        })
+
+
+        binding.fabSearchConfirm.setOnClickListener(View.OnClickListener {
+
+        })
+
+        binding.txtSimpleSearch.setOnClickListener(View.OnClickListener {
+            binding.apply {
+                fabSearchConfirm.visibility = View.VISIBLE
+                edtSearchHere.visibility = View.VISIBLE
+            }
+        })
+
+        binding.txtAdvanceSearch.setOnClickListener(View.OnClickListener {
+            Log.e("Advance Search Clicked","")
+            navController!!.navigate(R.id.action_employeeFragment_to_searchFragment)
         })
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -169,17 +226,36 @@ class EmployeeFragment : Fragment() {
                     EmployeeViewModel.EmployeeEvent.RefreshFragmentInCaseOfFailedApiResponse -> {
                         recallRetrofit()
                     }
+                    EmployeeViewModel.EmployeeEvent.ShowRecViewForSimpleSearchResult -> {
+                        showProgressBarAndResults()
+                    }
                 }.exhaustive
             }
         }
     }
 
+    private fun showProgressBarAndResults() {
+        binding.progressSimpleSearch.visibility = View.VISIBLE
+        Handler().postDelayed({
+            binding.apply {
+                recViewUsers.visibility = View.VISIBLE
+                txtAdvanceSearch.visibility = View.GONE
+                txtSimpleSearch.visibility = View.GONE
+                progressSimpleSearch.visibility = View.GONE
+            }
+
+        },1000)
+    }
+
     private fun recallRetrofit() {
         employeeViewModel.apiSuccessResponse.observe(viewLifecycleOwner) { response ->
             if (!response) {
-                Log.e("apisuccessResponse", "isSuccuesful?: ${Thread.currentThread().name} "+ response)
+                Log.e(
+                    "apisuccessResponse",
+                    "isSuccuesful?: ${Thread.currentThread().name} " + response
+                )
                 employeeViewModel.getEmployees(requireContext())
-            }else{
+            } else {
                 //progressDialog!!.dismiss()
             }
         }

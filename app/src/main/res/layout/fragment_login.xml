@@ -167,6 +167,7 @@
                   android:ems="10"
                   android:hint="Email"
                   android:inputType="textPersonName"
+
                   android:minHeight="48dp"
                   android:paddingLeft="8dp"
                   android:text="@={employee.userName}"

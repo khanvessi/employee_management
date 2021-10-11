@@ -1,10 +1,9 @@
 package com.example.employeescrud.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.example.employeescrud.data.models.Employee
-import kotlinx.coroutines.CompletableDeferred
 
 @Dao
 interface EmployeeDao {
@@ -25,4 +24,16 @@ interface EmployeeDao {
 
     @Query("SELECT * FROM employees WHERE id = :empId")
     suspend fun hasEmployee(empId: Int?): Employee
+
+    @Query("SELECT * FROM employees WHERE empName like '%' || :userInput || '%'")
+    suspend fun simpleNameSearch(userInput: String?): List<Employee>
+
+    @Query("SELECT * FROM employees WHERE empAge = :userInput")
+    suspend fun simpleAgeSearch(userInput: Int?): List<Employee>
+
+    @Query("SELECT * FROM employees WHERE empSalary = :userInput")
+    suspend fun simpleSalarySearch(userInput: Float?): List<Employee>
+
+    @RawQuery
+    suspend fun advanceSearch(combineQuery: SupportSQLiteQuery): List<Employee>
 }

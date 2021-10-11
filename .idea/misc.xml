@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/drawable/button_backgound_radius.xml" value="0.16875" />
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/drawable/edit_text_border.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/drawable/ic_search.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/drawable/ic_simple_search.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/activity_main.xml" value="0.209375" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/employee_item.xml" value="0.33" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_add_employee.xml" value="0.10182370820668693" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_addedit_employee.xml" value="0.25" />
-        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_employee.xml" value="0.1" />
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_employee.xml" value="0.22" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Users/Khan/AndroidStudioProjects/EmployeesRESTAPI_N_DB_Crud/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.209375" />
         <entry key="..\:/Users/knigh/AndroidStudioProjects/EmployeesCrud/app/src/main/res/drawable/button_backgound_radius.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/knigh/AndroidStudioProjects/EmployeesCrud/app/src/main/res/drawable/button_backgound_radius_white.xml" value="0.2111111111111111" />

@@ -29,6 +29,58 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
         liveDataDb
     val mediator = MediatorLiveData<Unit>()
     var areEmployeesAdded = MutableLiveData<Boolean>()
+    var simpleSearch = MutableLiveData<String>()
+
+    var simpleSearchResult = MutableLiveData<List<com.example.employeescrud.data.models.Employee>>()
+
+    fun onSimpleSearchConfirmClick(){
+        val userInput = simpleSearch.value
+
+        val type = checkTheUserInput(userInput)
+
+        viewModelScope.launch {
+            if(type == "string") {
+                simpleSearchResult.value = dao.simpleNameSearch(userInput)
+                Log.e("String: ", "Matched Employees ${Thread.currentThread().name}" + simpleSearchResult.value)
+            }
+
+            if(type == "int") {
+                simpleSearchResult.value = dao.simpleAgeSearch(userInput?.toInt())
+                Log.e("Int: ", "Matched Employees ${Thread.currentThread().name}" + simpleSearchResult.value)
+            }
+
+            if(type == "float") {
+                simpleSearchResult.value = dao.simpleSalarySearch(userInput?.toFloat())
+                Log.e("Float: ", "Matched Employees ${Thread.currentThread().name}" + simpleSearchResult.value)
+            }
+
+            employeeEventChannel.send(EmployeeEvent.ShowRecViewForSimpleSearchResult)
+        }
+
+    }
+
+    private fun checkTheUserInput(number: String?): String {
+        try {
+            number?.toInt()
+            return "int"
+        } catch (e: NumberFormatException) {
+
+        }
+
+        try {
+            number?.toFloat()
+            return "float"
+        } catch (e: NumberFormatException) {
+        }
+
+        try {
+            number.toString()
+            return "string"
+        } catch (e: NumberFormatException) {
+        }
+        return ""
+    }
+
 
     fun getEmployeesFromDb(context: Context) {
         viewModelScope.launch {
@@ -122,6 +174,7 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
         }
     }
 
+    //FOR CHANNELS
     sealed class EmployeeEvent() {
         data class SendDeleteEmployeeMessage(
             val flag: Int,
@@ -129,5 +182,6 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
         ) : EmployeeEvent()
 
         object RefreshFragmentInCaseOfFailedApiResponse : EmployeeEvent()
+        object ShowRecViewForSimpleSearchResult : EmployeeEvent()
     }
 }

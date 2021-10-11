@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val retrofitClient: RetrofitClient, androidContext: Context) :
     ViewModel() {
-
     val liveData = MutableLiveData<List<Employee>>()
     val dao = EmployeeDatabase.getDatabase(androidContext).employeeDao()
 
@@ -32,7 +31,6 @@ class LoginViewModel(private val retrofitClient: RetrofitClient, androidContext:
     fun onClickLogin() {
         var validInput = true
         viewModelScope.launch {
-
             if (userName.value.isNullOrEmpty()) {
                 validInput = false
                 errorEmail.value = "Please, provide the email!"

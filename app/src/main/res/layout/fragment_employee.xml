@@ -1,58 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="employee"
             type="com.example.employeescrud.ui.employee.EmployeeViewModel" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.employee.EmployeeFragment">
-
-    <com.facebook.shimmer.ShimmerFrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:id="@+id/shimmer_layout"
-        >
+        tools:context=".ui.employee.EmployeeFragment">
 
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/progress_simple_search"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:indeterminateTint="#b81e1e"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_search_here" />
+
+        <TextView
+            android:id="@+id/txt_advance_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/ic_advance_search"
+            android:text="Advance Search"
+            app:layout_constraintBottom_toTopOf="@+id/txt_simple_search"
+            app:layout_constraintStart_toStartOf="@+id/txt_simple_search" />
+
+        <TextView
+            android:id="@+id/txt_simple_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            android:drawableLeft="@drawable/ic_simple_search"
+            android:text="Simple Search"
+            app:layout_constraintBottom_toTopOf="@+id/fab_search_icon"
+            app:layout_constraintStart_toStartOf="@+id/fab_search_icon" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-            <include layout="@layout/shimmer_placeholder_layout"/>
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.presentation.UsersFragment">
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+                <include layout="@layout/shimmer_placeholder_layout" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="16dp"
+            android:background="@drawable/button_backgound_radius"
+            android:backgroundTint="@color/browser_actions_bg_grey"
+            android:clickable="true"
+            android:src="@drawable/ic_forward"
+            android:onClick="@{() -> employee.onSimpleSearchConfirmClick()}"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_search_here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edt_search_here"
+            app:layout_constraintTop_toTopOf="@+id/edt_search_here" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_view_users"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp" />
+            android:layout_height="750dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_task"
@@ -61,11 +119,46 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/browser_actions_bg_grey"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/edt_search_here"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="90dp"
+            android:layout_weight="1"
+            android:background="@color/browser_actions_bg_grey"
+            android:ems="10"
+            android:hint="Search here"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:paddingLeft="8dp"
+            android:text="@={employee.simpleSearch}"
+            android:textColorHint="@color/teal_700"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -106,9 +106,6 @@ class AddEditEmpViewModel(private val retrofitClient: RetrofitClient, androidCon
                         )
                     }
 
-
-
-
             }
         }
     }

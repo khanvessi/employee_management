@@ -63,7 +63,7 @@ class AddEditEmployeeFragment : Fragment() {
 
         //TODO: CHANGE THE TEXT TO ADD EMPLOYEE
         val navArgsMessage = args.addEmp
-        if(navArgsMessage.equals("create")) binding.signin.setText("Add Employee")
+        if(navArgsMessage.equals("create")) binding.signin.text = "Add Employee"
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             addEditEmpViewModel.employeesEvent.collect { event ->
@@ -95,17 +95,15 @@ class AddEditEmployeeFragment : Fragment() {
             }
         }
 
-
         addEditEmpViewModel.errorAge.observe(viewLifecycleOwner){
-            binding.age.setError(it)
+            binding.age.error = it
         }
         addEditEmpViewModel.errorName.observe(viewLifecycleOwner){
-            binding.name.setError(it)
+            binding.name.error = it
         }
         addEditEmpViewModel.errorSalary.observe(viewLifecycleOwner){
-            binding.salary.setError(it)
+            binding.salary.error = it
         }
-
     }
 
     private fun checkPermissions() {
