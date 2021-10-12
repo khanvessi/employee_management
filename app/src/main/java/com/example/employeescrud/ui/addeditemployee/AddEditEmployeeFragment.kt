@@ -2,6 +2,8 @@ package com.example.employeescrud.ui.addeditemployee
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -23,6 +25,21 @@ import com.example.employeescrud.utils.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
+import androidx.core.app.ActivityCompat.startActivityForResult
+
+import android.content.DialogInterface
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore.ACTION_IMAGE_CAPTURE
+import java.io.File
+import android.provider.MediaStore.Images
+import java.io.ByteArrayOutputStream
+
+
+
 
 
 class AddEditEmployeeFragment : Fragment() {
@@ -31,6 +48,12 @@ class AddEditEmployeeFragment : Fragment() {
     val addEditEmpViewModel: AddEditEmpViewModel by inject()
     lateinit var binding: FragmentAddeditEmployeeBinding
     private var navController: NavController? = null
+
+    protected val CAMERA_REQUEST = 0
+    protected val GALLERY_PICTURE = 1
+    private val pictureActionIntent: Intent? = null
+    var selectedImagePath: String? = null
+    val PERMISSION_CODE = 2000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,17 +81,20 @@ class AddEditEmployeeFragment : Fragment() {
 
         val employee = args.employee
 
+        Log.e("Nav Employee Model:", employee?.empImage.toString())
         //FOR UPDATING
         addEditEmpViewModel.onEditIconClick(employee, requireContext())
 
         //TODO: CHANGE THE TEXT TO ADD EMPLOYEE
         val navArgsMessage = args.addEmp
-        if(navArgsMessage.equals("create")) binding.signin.text = "Add Employee"
+        args.addEmp?.let { Log.e("NavArgsMessaage", it) }
+        if(navArgsMessage?.contains("create") == true) binding.btnAddEdit.text = "Confirm"
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             addEditEmpViewModel.employeesEvent.collect { event ->
                 when (event) {
                     is AddEditEmpViewModel.AddEmployeeEvent.SetImagetoImageView -> {
+                        Log.e("Image Selection Clicked", "Clickked")
                         checkPermissions()
                     }
                     is AddEditEmpViewModel.AddEmployeeEvent.OpenEmployeesFragment -> {
@@ -89,7 +115,7 @@ class AddEditEmployeeFragment : Fragment() {
                         }
                     }
                     is AddEditEmpViewModel.AddEmployeeEvent.OpenAddEditFragment -> {
-                          binding.signin.setText("Update")
+                          //binding.btnAddEdit.setText("Update")
                     }
                 }.exhaustive
             }
@@ -110,33 +136,118 @@ class AddEditEmployeeFragment : Fragment() {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_DENIED
+            && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
         ) {
             requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                2000
-            );
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+                PERMISSION_CODE
+            )
         } else {
-            openGallery()
+            startDialog()
         }
     }
 
+    private fun startDialog() {
+        val myAlertDialog: AlertDialog.Builder = AlertDialog.Builder(
+            activity
+        )
+        myAlertDialog.setTitle("Upload Pictures Option")
+        myAlertDialog.setMessage("How do you want to set your picture?")
+        myAlertDialog.setPositiveButton("Gallery",
+            DialogInterface.OnClickListener { _, _ ->
+                openGallery()
+            })
+        myAlertDialog.setNegativeButton("Camera",
+            DialogInterface.OnClickListener { _, _ ->
+                openCamera()
+            })
+        myAlertDialog.show()
+    }
+
     private fun openGallery() {
-            val cameraIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(cameraIntent, 1)
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(galleryIntent, 1)
+    }
+
+    private fun openCamera() {
+        val cameraIntent = Intent(ACTION_IMAGE_CAPTURE)
+        startActivityForResult(cameraIntent, 2)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == CAMERA_REQUEST){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                openCamera()
+            }
+
+            if(grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                openGallery()
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == 2000){
-            openGallery()
+
+        if (requestCode == 1) {
+            if(data?.data != null){
+            val uri = data.data
+            Log.e("Gallery Image Uri: ", uri.toString() + "")
+
+                val bitmap = MediaStore.Images.Media.getBitmap(
+                    activity?.applicationContext?.contentResolver,
+                    uri
+                )
+                val imagePath = uri?.let { getRealPathFromURI(it) }
+                addEditEmpViewModel.employeeImage.value = imagePath
+                binding.profileImage.setImageBitmap(bitmap)
+            }
+
         }
 
-        if(requestCode == 1){
-            val uri = data?.data
-            addEditEmpViewModel.employeeImage.value = uri.toString()
-            val bitmap = MediaStore.Images.Media.getBitmap(activity?.applicationContext?.contentResolver, uri )
-            binding.profileImage.setImageBitmap(bitmap)
+        if (requestCode == 2) {
+            if (data?.extras?.get("data") != null) {
+                val uri = data.extras?.get("data")
+                val tempUri: Uri =
+                    getImageUri(requireContext(), uri as Bitmap)
+
+                val imagePath = getRealPathFromURI(tempUri)
+
+                val bitmap = BitmapFactory.decodeFile(imagePath)
+                binding.profileImage.setImageBitmap(bitmap)
+
+                addEditEmpViewModel.employeeImage.value = imagePath
+                Log.e("Camera Image Uri: ", addEditEmpViewModel.employeeImage.value + "")
+            }
         }
+    }
+
+    //UTILITY FUNCTION
+    private fun getRealPathFromURI(uri: Uri): String {
+        var path = ""
+        if (activity?.applicationContext?.contentResolver != null) {
+            val cursor: Cursor? = activity?.applicationContext?.contentResolver
+                ?.query(uri, null, null, null, null)
+            if (cursor != null) {
+                cursor.moveToFirst()
+                val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                path = cursor.getString(idx)
+                cursor.close()
+            }
+        }
+        return path
+    }
+
+    private fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Image", null)
+        return Uri.parse(path)
     }
 }

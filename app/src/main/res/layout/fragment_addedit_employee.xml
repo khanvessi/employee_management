@@ -132,7 +132,7 @@
         android:text="@={addEmployeeViewModel.employeeAge}"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/signin"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -151,6 +151,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:onClick="@{()-> addEmployeeViewModel.onProfileImageClick()}"
         tools:ignore="SpeakableTextPresentCheck">
 
         <ImageView
@@ -158,6 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_image"
+            imageFromApi="@{addEmployeeViewModel.employeeImage}"
             android:scaleType="centerCrop"
             android:onClick="@{()-> addEmployeeViewModel.onProfileImageClick()}"
 
@@ -165,7 +167,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/signin"
+        android:id="@+id/btn_add_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -195,6 +197,7 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="@{()-> addEmployeeViewModel.onProfileImageClick()}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 

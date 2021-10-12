@@ -51,8 +51,7 @@ class AddEditEmpViewModel(private val retrofitClient: RetrofitClient, androidCon
                 employeeName.value.toString(),
                 employeeSalary.value.toString().toFloat(),
                 employeeAge.value.toString().toInt(),
-                ""
-                //employeeImage.value.toString()
+                employeeImage.value.toString()
             )
         }
         viewModelScope.launch {
@@ -71,8 +70,7 @@ class AddEditEmpViewModel(private val retrofitClient: RetrofitClient, androidCon
                         empName = employeeName.value.toString(),
                         empSalary = employeeSalary.value.toString().toFloat(),
                         empAge = employeeAge.value.toString().toInt(),
-                        empImage = ""
-                        //employeeImage.value.toString()
+                        empImage = employeeImage.value.toString()
                     )
                 var validInput = true
 
@@ -105,7 +103,6 @@ class AddEditEmpViewModel(private val retrofitClient: RetrofitClient, androidCon
                             "Update UI in thread: ${Thread.currentThread().name} " + inserted
                         )
                     }
-
             }
         }
     }

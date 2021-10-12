@@ -18,8 +18,8 @@ class LoginViewModel(private val retrofitClient: RetrofitClient, androidContext:
     val liveData = MutableLiveData<List<Employee>>()
     val dao = EmployeeDatabase.getDatabase(androidContext).employeeDao()
 
-    var userName = MutableLiveData<String>()
-    var password = MutableLiveData<String>()
+    var userName = MutableLiveData<String>("shan@gmail.com")
+    var password = MutableLiveData<String>("112233")
 
     var errorEmail = MutableLiveData<String>()
     var errorPassword = MutableLiveData<String>()

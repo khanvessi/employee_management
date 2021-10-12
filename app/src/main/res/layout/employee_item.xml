@@ -86,11 +86,11 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck">
 
-            <!--            imageFromApi="@{employeViewModel.employeeDataClass.profile_image}"-->
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                imageFromApi="@{employee.empImage}"
                 android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>

@@ -44,23 +44,23 @@ class LoginFragment : Fragment() {
             loginViewModel.employeeEvent.collect {event ->
                 when(event){
                         is LoginViewModel.LoginEvent.ShowEmployeesDetail -> {
-                            progressDialog = ProgressDialog(requireContext())
-                            progressDialog!!.setMessage("Verifying...")
-                            progressDialog!!.show()
-                            progressDialog!!.setCanceledOnTouchOutside(false)
-                            mAuth?.signInWithEmailAndPassword(event.userName, event.password)
-                                ?.addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        navController!!.navigate(R.id.action_loginFragment_to_employeeFragment)
-                                        progressDialog!!.dismiss()
-                                    } else {
-                                        progressDialog!!.dismiss()
-                                        binding.tilPassword.error = task.exception?.message
-                                    }
-                                    progressDialog!!.dismiss()
-                                }
+//                            progressDialog = ProgressDialog(requireContext())
+//                            progressDialog!!.setMessage("Verifying...")
+//                            progressDialog!!.show()
+//                            progressDialog!!.setCanceledOnTouchOutside(false)
+//                            mAuth?.signInWithEmailAndPassword(event.userName, event.password)
+//                                ?.addOnCompleteListener { task ->
+//                                    if (task.isSuccessful) {
+//                                        navController!!.navigate(R.id.action_loginFragment_to_employeeFragment)
+//                                        progressDialog!!.dismiss()
+//                                    } else {
+//                                        progressDialog!!.dismiss()
+//                                        binding.tilPassword.error = task.exception?.message
+//                                    }
+//                                    progressDialog!!.dismiss()
+//                                }
 
-//                            navController!!.navigate(R.id.action_loginFragment_to_employeeFragment)
+                            navController!!.navigate(R.id.action_loginFragment_to_employeeFragment)
 
                         }
 
@@ -80,15 +80,15 @@ class LoginFragment : Fragment() {
         //VALIDATION ERROR
         loginViewModel.errorEmail.observe(viewLifecycleOwner){
             //EMAIL
-            binding.edtUsername.setError(it)
+            binding.edtUsername.error = it
         }
 
         loginViewModel.errorPassword.observe(viewLifecycleOwner){
             //Password
-            binding.editTextTextPersonName.setError(it)
+            binding.editTextTextPersonName.error = it
         }
 
-//        binding.fabAddTask.setOnClickListener(View.OnClickListener {
+//        binding.fabAdd.setOnClickListener(View.OnClickListener {
 //            navController!!.navigate(R.id.action_loginFragment_to_addEmployeeFragment)
 //        })
     }

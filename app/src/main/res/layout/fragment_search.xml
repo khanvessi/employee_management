@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.example.employeescrud.adapters.BindingUtils"/>
+        <variable
+            name="search"
+            type="com.example.employeescrud.ui.searchemployee.SearchViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.searchemployee.SearchFragment">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_view_search"
+                android:layout_width="match_parent"
+                android:layout_height="750dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ProgressBar
+                android:id="@+id/progress_advance_search"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="#b81e1e"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@={BindingUtils.nameToButtonId(search.searchModel.name)}"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/cb_salary"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/edt_search_name">
+
+                <RadioButton
+                    android:id="@+id/rb_contain_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="20dp"
+                    android:text="Contain(s)" />
+
+                <RadioButton
+                    android:id="@+id/rb_except_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Except" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/radioGroup3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@={BindingUtils.salaryToButtonId(search.searchModel.salary)}"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/cb_age"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/edt_search_salary">
+
+                <RadioButton
+                    android:id="@+id/rb_contain_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="20dp"
+                    android:text="Contains" />
+
+                <RadioButton
+                    android:id="@+id/rb_except_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Except" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/radioGroup4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkedButton="@={BindingUtils.ageToButtonId(search.searchModel.age)}"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/signin"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/edt_search_age"
+                tools:ignore="UnknownIdInLayout">
+
+                <RadioButton
+                    android:id="@+id/rb_contain_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginRight="20dp"
+                    android:text="Contains" />
+
+                <RadioButton
+                    android:id="@+id/rb_except_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Except" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="80dp"
+                android:backgroundTint="#80FFFFFF"
+                android:backgroundTintMode="multiply"
+                android:shadowColor="#FFFFFF"
+                android:text="Advance Search"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/edt_search_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.44" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_advance_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/button_backgound_radius"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:focusable="true"
+                android:onClick="@{() -> search.onAdvanceSearchConfirmClick()}"
+                android:shadowColor="@color/black"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup4"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup4" />
+
+            <CheckBox
+                android:id="@+id/cb_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="29dp"
+                android:layout_marginEnd="112dp"
+                android:checked="@={search.searchModel.checkBoxName}"
+                android:text="Name"
+                app:layout_constraintBottom_toTopOf="@+id/edt_search_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <CheckBox
+                android:id="@+id/cb_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:checked="@={search.searchModel.checkBoxSalary}"
+                android:text="Salary"
+                app:layout_constraintBottom_toTopOf="@+id/edt_search_salary"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <CheckBox
+                android:id="@+id/cb_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:checked="@={search.searchModel.checkBoxAge}"
+                android:text="Age"
+                app:layout_constraintBottom_toTopOf="@+id/edt_search_age"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup3" />
+
+            <EditText
+                android:id="@+id/edt_search_name"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:hint="Enter the name"
+                android:inputType="textPersonName"
+                android:text="@={search.searchModel.edtName}"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/cb_name" />
+
+            <EditText
+                android:id="@+id/edt_search_salary"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:hint="Enter the Salary"
+                android:inputType="numberDecimal"
+                android:text="@={search.searchModel.edtSalary}"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/cb_salary" />
+
+            <EditText
+                android:id="@+id/edt_search_age"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:hint="Enter the Age"
+                android:inputType="number"
+                android:text="@={search.searchModel.edtAge}"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/cb_age" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.07" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="btn_advance_search,guideline3,edt_search_age,textView,cb_name,cb_age,radioGroup,cb_salary,radioGroup4,edt_search_salary,radioGroup3,edt_search_name" />
+
+            <TextView
+                android:id="@+id/txt_advance_search_progress_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Please wait..."
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progress_advance_search" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</layout>

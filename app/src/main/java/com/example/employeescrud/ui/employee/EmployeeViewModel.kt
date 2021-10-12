@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import android.widget.LinearLayout
+
+
+
 
 class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidContext: Context) :
     ViewModel() {
@@ -32,6 +36,12 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
     var simpleSearch = MutableLiveData<String>()
 
     var simpleSearchResult = MutableLiveData<List<com.example.employeescrud.data.models.Employee>>()
+
+    fun showFullSizedImage(){
+        viewModelScope.launch {
+            employeeEventChannel.send(EmployeeEvent.ShowFullSizedImage)
+        }
+    }
 
     fun onSimpleSearchConfirmClick(){
         val userInput = simpleSearch.value
@@ -183,5 +193,6 @@ class EmployeeViewModel(private val retrofitClient: RetrofitClient, androidConte
 
         object RefreshFragmentInCaseOfFailedApiResponse : EmployeeEvent()
         object ShowRecViewForSimpleSearchResult : EmployeeEvent()
+        object ShowFullSizedImage : EmployeeEvent()
     }
 }

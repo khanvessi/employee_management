@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -142,7 +145,7 @@ class EmployeeFragment : Fragment() {
             employeeAdapter.submitList(it)
         }
 
-        //ADDING AN EMPLOYEE
+        //ADDING/Updating AN EMPLOYEE
         binding.fabAddTask.setOnClickListener(View.OnClickListener {
             val action = EmployeeFragmentDirections.actionEmployeeFragmentToAddEmployeeFragment(
                 Employee(
@@ -175,9 +178,7 @@ class EmployeeFragment : Fragment() {
                     fabSearchConfirm.visibility = View.GONE
                     edtSearchHere.visibility = View.GONE
                     fabSearchIcon.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search));
-                    //employeeViewModel.getEmployeesFromDb(requireContext())
                     searchClick = true
-
                 }
             }
         })
@@ -229,13 +230,23 @@ class EmployeeFragment : Fragment() {
                     EmployeeViewModel.EmployeeEvent.ShowRecViewForSimpleSearchResult -> {
                         showProgressBarAndResults()
                     }
+                    EmployeeViewModel.EmployeeEvent.ShowFullSizedImage -> {
+                        //showFullSizedImage()
+                    }
                 }.exhaustive
             }
         }
     }
 
+
+
     private fun showProgressBarAndResults() {
         binding.progressSimpleSearch.visibility = View.VISIBLE
+        val margins = (binding.recViewUsers.layoutParams as ConstraintLayout.LayoutParams).apply {
+            topMargin = 145
+            rightMargin = 0
+        }
+        binding.recViewUsers.layoutParams = margins
         Handler().postDelayed({
             binding.apply {
                 recViewUsers.visibility = View.VISIBLE
