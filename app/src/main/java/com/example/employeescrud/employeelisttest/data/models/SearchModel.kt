@@ -1,4 +1,4 @@
-package com.example.employeescrud.data.models
+package com.example.employeescrud.employeelisttest.data.models
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable

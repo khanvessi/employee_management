@@ -1,23 +1,19 @@
 package com.example.employeescrud.ui.searchemployee
 
 import android.content.Context
-import android.text.BoringLayout
 import android.util.Log
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import androidx.sqlite.db.SupportSQLiteQuery
-import com.example.employeescrud.data.EmployeeDatabase
-import com.example.employeescrud.data.models.Employee
-import com.example.employeescrud.data.models.SearchModel
+import com.example.employeescrud.employeelisttest.data.EmployeeDatabase
+import com.example.employeescrud.employeelisttest.data.models.Employee
+import com.example.employeescrud.employeelisttest.data.models.SearchModel
 import com.example.employeescrud.network.retrofitsingleton.RetrofitClient
 import com.example.employeescrud.utils.Age
 import com.example.employeescrud.utils.Name
 import com.example.employeescrud.utils.Salary
 import kotlinx.coroutines.launch
-import java.util.jar.Attributes
 
 class SearchViewModel(private val retrofitClient: RetrofitClient, androidContext: Context) :
     ViewModel() {

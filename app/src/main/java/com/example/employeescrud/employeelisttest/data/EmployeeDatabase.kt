@@ -1,10 +1,10 @@
-package com.example.employeescrud.data
+package com.example.employeescrud.employeelisttest.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.employeescrud.data.models.Employee
+import com.example.employeescrud.employeelisttest.data.models.Employee
 
 @Database(entities = [Employee::class], version = 1)
 abstract class EmployeeDatabase : RoomDatabase() {

@@ -132,21 +132,21 @@ class AddEditEmployeeFragment : Fragment() {
         }
     }
 
-    private fun checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_DENIED
-            && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-        ) {
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
-                PERMISSION_CODE
-            )
-        } else {
-            startDialog()
+        private fun checkPermissions() {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_DENIED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+            ) {
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
+                    PERMISSION_CODE
+                )
+            } else {
+                startDialog()
+            }
         }
-    }
 
     private fun startDialog() {
         val myAlertDialog: AlertDialog.Builder = AlertDialog.Builder(

@@ -1,6 +1,8 @@
 package com.example.employeescrud.network.retrofitsingleton
 
+import android.content.Context
 import com.example.employeescrud.network.EmployeeApi
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,13 +13,14 @@ class RetrofitClient {
 
     private val BASE_URL = "http://dummy.restapiexample.com/api/v1/"
 
-    fun getService(): EmployeeApi {
+    fun getService(context: Context): EmployeeApi {
 
         val okHttpClient: OkHttpClient = OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(HttpLoggingInterceptor().setLevel( HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(ChuckInterceptor(context))
             .build()
 
         return Retrofit.Builder()

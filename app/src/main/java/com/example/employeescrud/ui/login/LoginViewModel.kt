@@ -1,12 +1,10 @@
 package com.example.employeescrud.ui.login
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.employeescrud.data.EmployeeDatabase
-import com.example.employeescrud.data.models.Login
+import com.example.employeescrud.employeelisttest.data.EmployeeDatabase
 import com.example.employeescrud.network.Employee
 import com.example.employeescrud.network.retrofitsingleton.RetrofitClient
 import kotlinx.coroutines.channels.Channel

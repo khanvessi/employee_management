@@ -7,7 +7,7 @@
     <data>
         <variable
             name="employee"
-            type="com.example.employeescrud.data.models.Employee" />
+            type="com.example.employeescrud.employeelisttest.data.models.Employee" />
         <variable
             name="employeViewModel"
             type="com.example.employeescrud.ui.employee.EmployeeViewModel" />
@@ -67,8 +67,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
 
             android:layout_margin="10dp"
             android:layout_marginStart="8dp"

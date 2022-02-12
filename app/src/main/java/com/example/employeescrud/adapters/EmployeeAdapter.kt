@@ -1,15 +1,10 @@
 package com.example.employeescrud.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.employeescrud.data.models.Employee
+import com.example.employeescrud.employeelisttest.data.models.Employee
 import com.example.employeescrud.databinding.EmployeeItemBinding
 
 class EmployeeAdapter(private val addEditEmployeeListener: AddEditEmployeeListener) : androidx.recyclerview.widget.ListAdapter<Employee, EmployeeAdapter.EmployeeViewHolder>(

@@ -1,4 +1,4 @@
-package com.example.employeescrud.data.models
+package com.example.employeescrud.employeelisttest.data.models
 
 import android.os.Parcelable
 import androidx.room.Entity

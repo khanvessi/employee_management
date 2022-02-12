@@ -1,9 +1,9 @@
-package com.example.employeescrud.data
+package com.example.employeescrud.employeelisttest.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.example.employeescrud.data.models.Employee
+import com.example.employeescrud.employeelisttest.data.models.Employee
 
 @Dao
 interface EmployeeDao {
@@ -34,6 +34,9 @@ interface EmployeeDao {
     @Query("SELECT * FROM employees WHERE empSalary = :userInput")
     suspend fun simpleSalarySearch(userInput: Float?): List<Employee>
 
+    /**
+     * This is a suspend method, which will find a List<Employees> upon user's requirements
+     */
     @RawQuery
     suspend fun advanceSearch(combineQuery: SupportSQLiteQuery): List<Employee>
 }
